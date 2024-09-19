@@ -1,18 +1,19 @@
 # Создаем класс 'Task'
-
 class Task:
     def __init__(self, description, deadline):
         self.description = description
         self.deadline = deadline
         self.completed = False
 
-        def mark_complete(self):
-            self.completed = True
+    def mark_complete(self):
+        self.completed = True
 
-        def __str__(self):
-            status = "Выполнено" if self.copleted else "Не выполнено"
-            return f"Задача: {self.description}, Срок: {self.deadline}, Статус: {status}"
+    def __str__(self):
+        status = "Выполнено" if self.completed else "Не выполнено"
+        return f"Задача: {self.description}, \nСрок: {self.deadline}, \nСтатус: {status}\n"
 
+
+# Создаем класс 'TaskManager'
 class TaskManager:
     def __init__(self):
         self.tasks = []
@@ -21,13 +22,16 @@ class TaskManager:
         task = Task(description, deadline)
         self.tasks.append(task)
 
-    def mark_task_copleted(self, task, index):
-        if 0 <= task_index < len(self.tasks):
+    def mark_task_completed(self, task_index):  # Исправлено
+        if 0 <= task_index < len(self.tasks):  # Исправлено
             self.tasks[task_index].mark_complete()
         else:
-            print("некорректный индекс задачи. Такой задачи нет")
+            print("Некорректный индекс задачи.")
 
     def get_pending_tasks(self):
+        return [task for task in self.tasks if not task.completed]
+
+    def show_pending_tasks(self):
         pending_tasks = self.get_pending_tasks()
         if not pending_tasks:
             print("Все задачи выполнены!")
@@ -35,6 +39,8 @@ class TaskManager:
             for task in pending_tasks:
                 print(task)
 
+
+# Пример использования
 # Создаем экземпляр класса 'TaskManager'
 task_manager = TaskManager()
 
@@ -48,7 +54,7 @@ print("Список невыполненных задач:")
 task_manager.show_pending_tasks()
 
 # Отмечаем задачу как выполненную с указанным индексом
-task_manager.mark_task_copleted(0)
+task_manager.mark_task_completed(0)  # Исправлено
 
 # Выводим текущий список - список невыполненных задач
 print("\nПосле выполнения задачи:")
